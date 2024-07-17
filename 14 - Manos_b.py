@@ -4,6 +4,7 @@ import mediapipe as mp
 from math import dist
 import time
 
+
 # Inicializar el modelo de detección de manos
 mpHands = mp.solutions.hands
 hands = mpHands.Hands(max_num_hands=1,
@@ -53,7 +54,7 @@ def detectarDedo():
            pass
 
 # Inicializar la cámara en el índice 6
-cap = cv2.VideoCapture(6)
+cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print("Error al abrir la cámara.")
@@ -63,6 +64,9 @@ while True:
     ret, frame = cap.read()
     if not ret:
         break
+
+    # Voltear la imagen horizontalmente
+    frame = cv2.flip(frame, 1)
 
     # Convertir la imagen de BGR a RGB
     imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)

@@ -5,13 +5,13 @@ import mediapipe as mp
 # Inicializar el modelo de detección de manos
 mpHands = mp.solutions.hands
 hands = mpHands.Hands(static_image_mode=False,
-                      max_num_hands=1,
+                      max_num_hands=2,
                       min_detection_confidence=0.7,
                       min_tracking_confidence=0.7)
 mpDraw = mp.solutions.drawing_utils
 
 # Inicializar la cámara
-cap = cv2.VideoCapture(6)
+cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
     print("Error al abrir la cámara.")
@@ -21,6 +21,9 @@ while True:
     ret, frame = cap.read()
     if not ret:
         break
+
+    # Voltear la imagen horizontalmente
+    frame = cv2.flip(frame, 1)
 
     # Convertir la imagen de BGR a RGB
     imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
